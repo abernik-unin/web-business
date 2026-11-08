@@ -1,0 +1,34 @@
+# Lokalne postavke i tajne
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Operacijski sustav
+.DS_Store
+Thumbs.db
+
+# Lokalni podaci i studentski materijali
+private/
+data/private/
+student-submissions/
+studentski-radovi/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# JavaScript / TypeScript
+node_modules/
+dist/
+build/
+.next/
+coverage/
+
+# Privremene datoteke
+*.log
+*.tmp
