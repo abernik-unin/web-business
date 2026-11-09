@@ -81,7 +81,7 @@ try {
 
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
   const desktopWatch = await prepare(page);
-  check((await page.$eval("h1", (node) => node.textContent?.trim()))?.includes("Predmet"), "Nedostaje naslov");
+  check((await page.$eval("h1", (node) => node.textContent?.trim()))?.includes("2D i 3D"), "Nedostaje naslov");
   check((await page.$eval("html", (node) => node.lang)) === "hr", "Jezik nije hr");
   check((await page.$$("h1")).length === 1, "Nije točno jedan h1");
   const enabled = await page.$eval("#posalji", (node) => node.disabled === false);
@@ -116,11 +116,9 @@ try {
     check(extra <= 1, `Vodoravni preljev na ${width}px: ${extra}px`);
   }
 
-  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 2 });
-  await page.evaluate(() => window.scrollTo(0, 0));
-  if (shots) await page.screenshot({ path: `${artifacts}/naslovnica_hero_desktop.png` });
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
-  if (shots) await page.screenshot({ path: `${artifacts}/naslovnica_desktop.png`, fullPage: true });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  if (shots) await page.screenshot({ path: `${artifacts}/staklo_hero_desktop.png` });
 
   const requests = [];
   const onRequest = (request) => requests.push(request.url());
@@ -167,7 +165,7 @@ try {
   await prepare(page);
   const closed = await page.$eval("#izbornik", (node) => getComputedStyle(node).display === "none");
   check(closed, "Mobilni izbornik je vidljiv prije otvaranja");
-  if (shots) await page.screenshot({ path: `${artifacts}/naslovnica_mobilna.png`, fullPage: true });
+  if (shots) await page.screenshot({ path: `${artifacts}/staklo_hero_mobilna.png` });
   await page.click("#otvori-izbornik");
   const opened = await page.$eval("#otvori-izbornik", (node) => node.getAttribute("aria-expanded") === "true");
   check(opened, "Izbornik se nije otvorio");
@@ -196,46 +194,23 @@ try {
   check(mobileOverflow <= 1, `Mobilni preljev nakon izbornika: ${mobileOverflow}px`);
 
   if (shots) {
-    const stages = [
-      ["pocetak", 0],
-      ["unutra", 0.55],
-      ["jezgra", 0.86],
-      ["kontakt", 1],
-    ];
-    for (const [label, width, height] of [
-      ["desktop", 1440, 900],
-      ["mobilna", 390, 844],
+    await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+    await prepare(page);
+    for (const [name, id] of [
+      ["projekti", "projekti"],
+      ["dizajn", "dizajn"],
+      ["kontakt", "kontakt"],
     ]) {
-      await page.setViewport({ width, height, deviceScaleFactor: 1 });
-      await prepare(page);
-      await page.waitForFunction(
-        () => {
-          const node = document.querySelector("#scena-status");
-          return node?.classList.contains("je-spreman") || node?.classList.contains("je-greska");
-        },
-        { timeout: 25000 },
-      );
-      await delay(500);
-      for (const [name, progress] of stages) {
-        await page.evaluate((value) => {
-          const max = document.documentElement.scrollHeight - window.innerHeight;
-          window.scrollTo(0, max * value);
-        }, progress);
-        await delay(450);
-        await page.screenshot({ path: `${artifacts}/scena_${name}_${label}.png` });
-      }
+      await page.click(`#izbornik a[href="#${id}"]`);
+      await delay(400);
+      await page.screenshot({ path: `${artifacts}/staklo_${name}_desktop.png` });
     }
   }
 
-  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
   await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
   await page.goto(base, { waitUntil: "networkidle0" });
-  await page.waitForFunction(
-    () => document.querySelector("#scena-status")?.textContent?.includes("isključena"),
-    { timeout: 25000 },
-  );
-  const cursorCount = await page.$$eval(".kursor", (nodes) => nodes.length);
-  check(cursorCount === 0, "Kursor je uključen iako je pokret smanjen");
+  const still = await page.$eval(".orb", (node) => getComputedStyle(node).animationName);
+  check(still === "none", `Oblik se i dalje miče: ${still}`);
 
   check(desktopWatch.pageErrors.length === 0, `Greške stranice: ${desktopWatch.pageErrors.join(" | ")}`);
   check(desktopWatch.badResponses.length === 0, `Loši odgovori: ${desktopWatch.badResponses.join(" | ")}`);

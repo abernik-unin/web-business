@@ -6,26 +6,19 @@
     <meta name="robots" content="noindex" />
     <meta
       name="description"
-      content="3dfx visual studio radi 3D vizualizaciju, modeliranje, 3D skeniranje, fotogrametriju i LiDAR malih i srednjih objekata te web stranice, konzulting i optimiziranje procesa."
+      content="3dfx visual studio radi 2D dizajn, 3D vizualizaciju i 3D modeliranje za poslovne subjekte te mala i srednja poduzeća."
     />
     <meta name="theme-color" content="#000000" />
-    <meta property="og:title" content="3dfx visual studio" />
-    <meta
-      property="og:description"
-      content="3D vizualizacija, modeliranje i snimanje malih i srednjih objekata te web stranice, konzulting i optimiziranje procesa."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="hr_HR" />
-    <title>3dfx visual studio — 3D, snimanje i web</title>
+    <title>3dfx visual studio — 2D i 3D dizajn</title>
     <link rel="icon" href="/favicon.png" type="image/png" />
   </head>
   <body>
     <a class="skip" href="#sadrzaj">Preskoči na sadržaj</a>
-    <div id="scena" class="scena" aria-hidden="true">
-      <canvas id="cestice"></canvas>
-      <canvas id="platno"></canvas>
+    <div class="pozadina" aria-hidden="true">
+      <span class="orb orb-a"></span>
+      <span class="orb orb-b"></span>
+      <span class="orb orb-c"></span>
     </div>
-    <p id="scena-status" class="scena-status" role="status">Učitavanje sata…</p>
     <header class="site-header">
       <div class="wrap header-bar">
         <a class="logo" href="#vrh" aria-label="3dfx visual studio, na vrh stranice">
@@ -34,331 +27,200 @@
         <button class="nav-toggle" id="otvori-izbornik" type="button" aria-expanded="false" aria-controls="izbornik">
           Izbornik
         </button>
-        <nav id="izbornik" aria-label="Glavna navigacija" data-open="false">
-          <a href="#usluge">Usluge</a>
-          <a href="#nacin-rada">Način rada</a>
-          <a href="#proces">Proces</a>
-          <a href="#radovi">Radovi</a>
+        <nav id="izbornik" class="staklo-traka" aria-label="Glavna navigacija" data-open="false">
+          <a href="#projekti">Projekti</a>
+          <a href="#dizajn">2D/3D dizajn</a>
           <a href="#kontakt">Kontakt</a>
         </nav>
       </div>
     </header>
 
     <main id="sadrzaj" tabindex="-1">
-      <section class="blok hero" id="vrh" aria-labelledby="naslov">
-        <div class="wrap blok-kopija">
-          <p class="eyebrow">Radna inačica · mala i srednja poduzeća</p>
-          <h1 id="naslov">Predmet, prostor i proces na jednom mjestu.</h1>
-          <p class="lead">
-            Izrađujemo 3D vizualizacije i modele, snimamo male i srednje objekte te slažemo web
-            stranice. Uz to pomažemo razjasniti zadatak i urediti proces rada. Stranica je
-            namijenjena poslovnim subjektima te malim i srednjim poduzećima.
-          </p>
-          <p class="pokret">Listajte prema dolje: pogled ulazi u sat i istim putem se vraća.</p>
-          <p class="sitno">Sat u pozadini vlastiti je model studija. Nije prikaz klijentskog rada.</p>
-          <div class="hero-actions">
-            <a class="button" href="#kontakt">Pošaljite upit</a>
-            <a class="link-quiet" href="#usluge">Pregled usluga</a>
+      <section class="hero" id="vrh" aria-labelledby="naslov">
+        <div class="wrap hero-grid">
+          <div class="staklo">
+            <p class="eyebrow">Radna inačica</p>
+            <h1 id="naslov">2D i 3D dizajn za jasan oblik.</h1>
+            <p class="lead">
+              Radimo prikaze u ravnini i u prostoru: 2D dizajn, 3D vizualizaciju i 3D modeliranje.
+              Za poslovne subjekte te mala i srednja poduzeća. Opseg dogovaramo unaprijed.
+            </p>
+            <div class="hero-actions">
+              <a class="button" href="#kontakt">Pošaljite upit</a>
+              <a class="link-quiet" href="#dizajn">Pregled dizajna</a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="blok" id="usluge" aria-labelledby="usluge-naslov">
-        <div class="wrap blok-kopija">
+      <section class="blok" id="projekti" aria-labelledby="projekti-naslov">
+        <div class="wrap">
           <header class="section-head">
             <p class="index">01</p>
-            <h2 id="usluge-naslov">Usluge</h2>
+            <h2 id="projekti-naslov">Projekti</h2>
             <p class="section-lead">
-              Tri skupine rada. Možete uzeti jednu ili spojiti više njih u isti zadatak. Opseg,
-              format datoteka i način predaje dogovaramo posebno.
+              Javni radovi još nisu uvršteni. Ovdje neće biti tuđih ni izmišljenih projekata. Kad
+              bude radova s dopuštenjem za prikaz, dobit će ova mjesta.
             </p>
           </header>
-          <div class="groups">
-            <section class="group" aria-labelledby="skupina-izrada">
-              <div class="group-head">
-                <h3 id="skupina-izrada">Izrada</h3>
-                <p>Digitalni oblik koji se može pokazati, uskladiti ili dalje obrađivati.</p>
-              </div>
-              <div class="cards">
-                <article class="card">
-                  <p class="card-index">01</p>
-                  <h4>3D vizualizacija</h4>
-                  <p>
-                    Slika ili niz kadrova proizvoda, prostora ili zamisli. Koristi se kad izgled
-                    treba vidjeti prije izrade, uskladiti s drugima ili pripremiti za predstavljanje.
-                  </p>
-                </article>
-                <article class="card">
-                  <p class="card-index">02</p>
-                  <h4>3D modeliranje</h4>
-                  <p>
-                    Izrada digitalnog modela prema skici, mjeri, fotografiji ili postojećem predmetu.
-                    Model može ostati samostalan ili poslužiti kao osnova za vizualizaciju i web.
-                  </p>
-                </article>
-              </div>
-            </section>
-            <section class="group" aria-labelledby="skupina-snimanje">
-              <div class="group-head">
-                <h3 id="skupina-snimanje">Snimanje</h3>
-                <p>
-                  Polazište već postoji. Snimamo predmete, instalacije, dijelove interijera i manje
-                  građevine — snimanje malih i srednjih objekata, u dogovorenom opsegu.
-                </p>
-              </div>
-              <div class="cards">
-                <article class="card">
-                  <p class="card-index">03</p>
-                  <h4>3D skeniranje</h4>
-                  <p>
-                    Prijenos predmeta u digitalni zapis koji se može pregledavati i dalje obrađivati.
-                    Točnost i razlučivost ovise o predmetu i dogovorenom načinu snimanja.
-                  </p>
-                </article>
-                <article class="card">
-                  <p class="card-index">04</p>
-                  <h4>Fotogrametrija i LiDAR</h4>
-                  <p>
-                    Fotogrametrija slaže oblik iz niza fotografija. LiDAR dodaje oblak točaka. Oba
-                    pristupa koristimo za male i srednje objekte, uz dogovor o pristupu mjestu snimanja.
-                  </p>
-                </article>
-              </div>
-            </section>
-            <section class="group" aria-labelledby="skupina-poslovanje">
-              <div class="group-head">
-                <h3 id="skupina-poslovanje">Poslovanje</h3>
-                <p>Kad uz oblik treba srediti i način na koji se usluga predstavlja ili odvija.</p>
-              </div>
-              <div class="cards cards-three">
-                <article class="card">
-                  <p class="card-index">05</p>
-                  <h4>Konzulting</h4>
-                  <p>
-                    Razgovor o tome što od 3D zapisa, weba ili procesa ima smisla prije izrade.
-                    Rezultat je jasniji opis zadatka, ne gotov proizvod.
-                  </p>
-                </article>
-                <article class="card">
-                  <p class="card-index">06</p>
-                  <h4>Izrada web stranica</h4>
-                  <p>
-                    Poslovne stranice za uslugu, proizvod ili predstavljanje rada. Naglasak je na
-                    čitljivom tekstu, preglednosti na mobitelu i sadržaju koji se može održavati.
-                  </p>
-                </article>
-                <article class="card">
-                  <p class="card-index">07</p>
-                  <h4>Optimiziranje procesa</h4>
-                  <p>
-                    Pregled koraka koji se ponavljaju, od upita do predaje, i prijedlog jednostavnijeg
-                    tijeka. Ako ima smisla, u taj tijek ulazi 3D zapis ili stranica.
-                  </p>
-                </article>
-              </div>
-            </section>
-          </div>
+          <ul class="praznine">
+            <li class="staklo prazno">
+              <span>01</span>
+              <p>Prazno mjesto</p>
+            </li>
+            <li class="staklo prazno">
+              <span>02</span>
+              <p>Prazno mjesto</p>
+            </li>
+            <li class="staklo prazno">
+              <span>03</span>
+              <p>Prazno mjesto</p>
+            </li>
+          </ul>
         </div>
       </section>
 
-      <section class="blok" id="nacin-rada" aria-labelledby="nacin-naslov">
-        <div class="wrap blok-kopija">
+      <section class="blok" id="dizajn" aria-labelledby="dizajn-naslov">
+        <div class="wrap">
           <header class="section-head">
             <p class="index">02</p>
-            <h2 id="nacin-naslov">Način rada</h2>
+            <h2 id="dizajn-naslov">2D/3D dizajn</h2>
             <p class="section-lead">
-              Bez obećanja koja stranica ne može provjeriti. Ono što možete očekivati jest jasan
-              dogovor o zadatku.
+              Tri vrste dizajna. Možete uzeti jednu ili spojiti prikaz u ravnini s modelom u
+              prostoru. Format datoteka dogovaramo posebno.
             </p>
           </header>
-          <ol class="principles">
-            <li>
-              <h3>Opseg prije izrade</h3>
-              <p>Zapišemo što ulazi u zadatak, što ostaje izvan njega i koje materijale trebate dati.</p>
-            </li>
-            <li>
-              <h3>Jedna usluga ili spoj</h3>
+          <div class="kartice">
+            <article class="staklo kartica">
+              <p class="index">01</p>
+              <h3>2D dizajn</h3>
               <p>
-                Vizualizacija, snimanje i web mogu biti odvojeni poslovi. Mogu se i nastaviti jedan na
-                drugi kad to zadatak traži.
+                Prikaz u ravnini: znak, plakat ili niz slika za predstavljanje usluge ili proizvoda.
+                Služi kad treba jasan grafički materijal prije ili uz objavu.
               </p>
-            </li>
-            <li>
-              <h3>Predaja s napomenom</h3>
+            </article>
+            <article class="staklo kartica">
+              <p class="index">02</p>
+              <h3>3D vizualizacija</h3>
               <p>
-                Uz datoteke, stranicu ili bilješku preporuka ide kratka napomena kako se rezultat
-                koristi, u dogovorenom obliku.
+                Slika ili niz kadrova proizvoda, prostora ili zamisli. Koristi se kad izgled treba
+                vidjeti prije izrade, uskladiti s drugima ili pripremiti za predstavljanje.
               </p>
-            </li>
-            <li>
-              <h3>Javno samo stvarno</h3>
+            </article>
+            <article class="staklo kartica">
+              <p class="index">03</p>
+              <h3>3D modeliranje</h3>
               <p>
-                Ne objavljujemo tuđe radove, izjave ni brojke. Primjeri će stajati na stranici tek kad
-                za to postoji dopuštenje.
+                Izrada digitalnog modela prema skici, mjeri, fotografiji ili postojećem predmetu.
+                Model može ostati samostalan ili poslužiti kao osnova za vizualizaciju.
               </p>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="blok" id="proces" aria-labelledby="proces-naslov">
-        <div class="wrap blok-kopija">
-          <header class="section-head">
-            <p class="index">03</p>
-            <h2 id="proces-naslov">Proces</h2>
-            <p class="section-lead">
-              Okvir u četiri koraka. Manji zadatak može stati u kraći razgovor. Snimanje na terenu
-              traži poseban dogovor o pristupu i vremenu.
-            </p>
-          </header>
-          <ol class="steps">
-            <li>
-              <h3>Upit</h3>
-              <p>Opišete što treba nastati i čemu rezultat služi.</p>
-            </li>
-            <li>
-              <h3>Razjašnjavanje</h3>
-              <p>Provjerimo je li zadatak u okviru ovih usluga i što je potrebno za početak.</p>
-            </li>
-            <li>
-              <h3>Izrada</h3>
-              <p>Radimo dogovoreni dio. Ako se opseg mijenja, to kažemo prije nastavka.</p>
-            </li>
-            <li>
-              <h3>Predaja</h3>
-              <p>Dobivate dogovoreni rezultat i kratku napomenu za korištenje.</p>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="blok" id="radovi" aria-labelledby="radovi-naslov">
-        <div class="wrap blok-kopija">
-          <header class="section-head">
-            <p class="index">04</p>
-            <h2 id="radovi-naslov">Radovi</h2>
-            <p class="section-lead">Javni primjeri još nisu uvršteni.</p>
-          </header>
-          <div class="works-panel">
-            <p>
-              Mjesto je rezervirano. Ne prikazujemo zamjenske projekte, tuđe fotografije ni izmišljena
-              imena. Kad bude radova s dopuštenjem za javni prikaz, dobit će ovo mjesto.
-            </p>
+            </article>
           </div>
         </div>
       </section>
 
       <section class="blok" id="kontakt" aria-labelledby="kontakt-naslov">
-        <div class="wrap blok-kopija kontakt-panel">
-          <div class="contact-grid">
-            <div>
-              <header class="section-head">
-                <p class="index">05</p>
-                <h2 id="kontakt-naslov">Kontakt</h2>
-                <p class="section-lead">
-                  E-pošta, telefon i adresa još nisu uneseni. Dodat ćemo ih prije javne objave. Do tada
-                  obrazac služi za pregled stranice.
-                </p>
-              </header>
-              <dl class="facts">
-                <div>
-                  <dt>E-pošta</dt>
-                  <dd>Još nije unesena</dd>
-                </div>
-                <div>
-                  <dt>Telefon</dt>
-                  <dd>Još nije unesen</dd>
-                </div>
-                <div>
-                  <dt>Adresa</dt>
-                  <dd>Još nije unesena</dd>
-                </div>
-                <div>
-                  <dt>Domena</dt>
-                  <dd>3dfx.hr</dd>
-                </div>
-              </dl>
-            </div>
-            <div>
-              <form id="upit" data-connected="false" novalidate>
-                <p id="upit-napomena" class="form-note">
-                  Obrazac nije povezan s poštom ni poslužiteljem. Poruka se ne šalje i ne sprema. Podaci
-                  ostaju samo u poljima dok je stranica otvorena.
-                </p>
-                <div class="field-row">
-                  <div class="field">
-                    <label for="ime">Ime i prezime</label>
-                    <input id="ime" name="name" type="text" autocomplete="name" maxlength="120" required />
-                    <p id="pogreska-name" class="field-error"></p>
-                  </div>
-                  <div class="field">
-                    <label for="tvrtka">Tvrtka ili obrt <span class="optional">(nije obavezno)</span></label>
-                    <input id="tvrtka" name="company" type="text" autocomplete="organization" maxlength="160" />
-                    <p class="field-error"></p>
-                  </div>
+        <div class="wrap kontakt-grid">
+          <div class="staklo">
+            <header class="section-head">
+              <p class="index">03</p>
+              <h2 id="kontakt-naslov">Kontakt</h2>
+              <p class="section-lead">
+                E-pošta, telefon i adresa još nisu uneseni. Dodat ćemo ih prije javne objave. Do tada
+                obrazac služi za pregled stranice.
+              </p>
+            </header>
+            <dl class="facts">
+              <div>
+                <dt>E-pošta</dt>
+                <dd>Još nije unesena</dd>
+              </div>
+              <div>
+                <dt>Telefon</dt>
+                <dd>Još nije unesen</dd>
+              </div>
+              <div>
+                <dt>Adresa</dt>
+                <dd>Još nije unesena</dd>
+              </div>
+              <div>
+                <dt>Domena</dt>
+                <dd>3dfx.hr</dd>
+              </div>
+            </dl>
+          </div>
+          <div class="staklo">
+            <form id="upit" data-connected="false" novalidate>
+              <p id="upit-napomena" class="form-note">
+                Obrazac nije povezan s poštom ni poslužiteljem. Poruka se ne šalje i ne sprema. Podaci
+                ostaju samo u poljima dok je stranica otvorena.
+              </p>
+              <div class="field-row">
+                <div class="field">
+                  <label for="ime">Ime i prezime</label>
+                  <input id="ime" name="name" type="text" autocomplete="name" maxlength="120" required />
+                  <p id="pogreska-name" class="field-error"></p>
                 </div>
                 <div class="field">
-                  <label for="eposta">E-pošta</label>
-                  <input
-                    id="eposta"
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    maxlength="160"
-                    required
-                    data-hint="eposta-napomena"
-                    aria-describedby="eposta-napomena"
-                  />
-                  <p id="eposta-napomena" class="hint">Adresa služi samo za isprobavanje obrasca i ne šalje se.</p>
-                  <p id="pogreska-email" class="field-error"></p>
+                  <label for="tvrtka">Tvrtka ili obrt <span class="optional">(nije obavezno)</span></label>
+                  <input id="tvrtka" name="company" type="text" autocomplete="organization" maxlength="160" />
+                  <p class="field-error"></p>
                 </div>
-                <div class="field">
-                  <label for="interes">Što vas zanima <span class="optional">(nije obavezno)</span></label>
-                  <select id="interes" name="interest">
-                    <option value="">Još nije odabrano</option>
-                    <option>3D vizualizacija</option>
-                    <option>3D modeliranje</option>
-                    <option>3D skeniranje</option>
-                    <option>Fotogrametrija i LiDAR</option>
-                    <option>Konzulting</option>
-                    <option>Izrada web stranica</option>
-                    <option>Optimiziranje procesa</option>
-                    <option>Više usluga odjednom</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label for="poruka">Poruka</label>
-                  <textarea id="poruka" name="message" maxlength="2000" required></textarea>
-                  <p id="pogreska-message" class="field-error"></p>
-                </div>
-                <p id="upit-status" class="status" tabindex="-1" role="status" aria-live="assertive" aria-atomic="true" hidden></p>
-                <button type="submit" id="posalji" class="button" disabled aria-describedby="upit-napomena">
-                  Pošalji upit
-                </button>
-              </form>
-              <noscript>
-                <p class="form-note">
-                  Bez JavaScripta obrazac ostaje isključen. To je namjerno: poruka se ionako još ne može
-                  poslati, a kontakt podaci nisu objavljeni.
-                </p>
-              </noscript>
-            </div>
+              </div>
+              <div class="field">
+                <label for="eposta">E-pošta</label>
+                <input
+                  id="eposta"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  maxlength="160"
+                  required
+                  data-hint="eposta-napomena"
+                  aria-describedby="eposta-napomena"
+                />
+                <p id="eposta-napomena" class="hint">Adresa služi samo za isprobavanje obrasca i ne šalje se.</p>
+                <p id="pogreska-email" class="field-error"></p>
+              </div>
+              <div class="field">
+                <label for="interes">Što vas zanima <span class="optional">(nije obavezno)</span></label>
+                <select id="interes" name="interest">
+                  <option value="">Još nije odabrano</option>
+                  <option>2D dizajn</option>
+                  <option>3D vizualizacija</option>
+                  <option>3D modeliranje</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="poruka">Poruka</label>
+                <textarea id="poruka" name="message" maxlength="2000" required></textarea>
+                <p id="pogreska-message" class="field-error"></p>
+              </div>
+              <p id="upit-status" class="status" tabindex="-1" role="status" aria-live="assertive" aria-atomic="true" hidden></p>
+              <button type="submit" id="posalji" class="button" disabled aria-describedby="upit-napomena">
+                Pošalji upit
+              </button>
+            </form>
+            <noscript>
+              <p class="form-note">
+                Bez JavaScripta obrazac ostaje isključen. To je namjerno: poruka se ionako još ne može
+                poslati, a kontakt podaci nisu objavljeni.
+              </p>
+            </noscript>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div class="wrap footer-grid">
+      <div class="wrap footer-grid staklo">
         <div>
           <img class="logo-slika logo-slika-mala" src="/brand/logo.png" width="96" height="58" alt="3dfx visual studio" />
           <p class="footer-note">Radna inačica stranice<br />3dfx.hr</p>
         </div>
         <nav aria-label="Podnožje">
-          <a href="#usluge">Usluge</a>
-          <a href="#nacin-rada">Način rada</a>
-          <a href="#proces">Proces</a>
-          <a href="#radovi">Radovi</a>
+          <a href="#projekti">Projekti</a>
+          <a href="#dizajn">2D/3D dizajn</a>
           <a href="#kontakt">Kontakt</a>
         </nav>
         <p class="footer-note">

@@ -11,20 +11,13 @@ const publicText = `${html}\n${css}`;
 const visibleHtml = html.replace(/<svg[\s\S]*?<\/svg>/g, "");
 
 describe("javni sadržaj", () => {
-  it("je na hrvatskom i pokriva dogovorene usluge", () => {
+  it("je na hrvatskom i pokriva samo dizajn", () => {
     expect(html).toContain('lang="hr"');
-    for (const phrase of [
-      "3D vizualizacija",
-      "3D modeliranje",
-      "3D skeniranje",
-      "Fotogrametrija i LiDAR",
-      "Konzulting",
-      "Izrada web stranica",
-      "Optimiziranje procesa",
-      "malih i srednjih",
-      "poslovnim subjektima",
-    ]) {
+    for (const phrase of ["2D dizajn", "3D vizualizacija", "3D modeliranje", "Projekti", "Kontakt", "poslovne subjekte"]) {
       expect(html).toContain(phrase);
+    }
+    for (const gone of ["3D skeniranje", "Fotogrametrija", "LiDAR", "Konzulting", "Izrada web stranica", "Optimiziranje procesa", "Način rada"]) {
+      expect(html).not.toContain(gone);
     }
   });
 
@@ -37,7 +30,7 @@ describe("javni sadržaj", () => {
     expect(html).toContain("nije povezan");
     expect(html).toContain("<noscript>");
     expect(html).toMatch(/<button[^>]*id="posalji"[^>]*disabled/);
-    for (const id of ["usluge", "nacin-rada", "proces", "radovi", "kontakt"]) {
+    for (const id of ["projekti", "dizajn", "kontakt"]) {
       expect(html).toContain(`id="${id}"`);
       expect(html).toContain(`href="#${id}"`);
     }
@@ -95,5 +88,7 @@ describe("ponašanje obrasca u kodu", () => {
       expect(sources).not.toContain(token);
     }
     expect(sources.toLowerCase()).not.toContain("uspješno");
+    expect(main).not.toContain("three");
+    expect(readFileSync(resolve(root, "package.json"), "utf8")).not.toContain("three");
   });
 });
