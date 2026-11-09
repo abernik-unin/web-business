@@ -21,6 +21,10 @@ npm run check:ui
 
 `npm run dev` otvara lokalni pregled. `npm run check:ui` treba lokalni Chrome i prolazi kroz širine 320, 390, 768, 1024 i 1440 px, izbornik i obrazac.
 
+Naslovi koriste font Nunito, tekst Outfit. Oba su uključena u stranicu. U pozadini je vlastiti model sata; listanje ga okreće i otvara. Na mobitelu je lakši model, a uz smanjenje pokreta ostaje miran kadar. Obrazac i dalje ne šalje poruku.
+
+Datoteka `.github/workflows/pages.yml` slaže `dist` za GitHub Pages na adresi `https://abernik-unin.github.io/web-business/`. Nema CNAME-a i domena 3dfx.hr se ne dira. `noindex` ostaje.
+
 ## Namjerno nedovršeno
 
 - Nema prave adrese e-pošte, telefona ni sjedišta. Na stranici piše da još nisu uneseni.
@@ -29,7 +33,7 @@ npm run check:ui
 - Pravne stranice dolaze prije javne objave.
 - U zaglavlju stoji `noindex`, da se radna inačica ne nudi za indeksiranje. To treba ukloniti tek uz stvarnu objavu.
 
-Domena 3dfx.hr navedena je kao tekst, bez poveznice. DNS, hosting i objava nisu dio ovog repozitorija.
+Domena 3dfx.hr navedena je kao tekst, bez poveznice. DNS se ne dira.
 
 ## Pravila sadržaja
 

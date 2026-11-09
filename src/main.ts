@@ -1,4 +1,4 @@
-import "@fontsource-variable/fraunces/opsz.css";
+import "@fontsource-variable/nunito/wght.css";
 import "@fontsource-variable/outfit/wght.css";
 import "./style.css";
 import { reviewInquiry, type InquiryInput } from "./inquiry";
@@ -145,3 +145,26 @@ if (form instanceof HTMLFormElement && status instanceof HTMLElement && submitBu
   form.addEventListener("submit", onSubmit);
   submitButton.disabled = false;
 }
+
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const narrow = window.matchMedia("(max-width: 860px)").matches;
+const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+const bootScene = (): void => {
+  void import("./particles").then(({ mountParticles }) => {
+    const field = document.querySelector("#cestice");
+    if (field instanceof HTMLCanvasElement) mountParticles(field, { reduced: reducedMotion, mobile: narrow });
+  });
+  void import("./scene").then(({ mountScene }) => {
+    const canvas = document.querySelector("#platno");
+    const sceneStatus = document.querySelector("#scena-status");
+    if (canvas instanceof HTMLCanvasElement && sceneStatus instanceof HTMLElement) {
+      void mountScene({ canvas, status: sceneStatus, mobile: narrow, reduced: reducedMotion });
+    }
+  });
+  if (finePointer && !narrow && !reducedMotion) {
+    void import("./cursor").then(({ mountCursor }) => mountCursor());
+  }
+};
+
+window.addEventListener("load", bootScene, { once: true });

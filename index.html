@@ -8,7 +8,7 @@
       name="description"
       content="3dfx visual studio radi 3D vizualizaciju, modeliranje, 3D skeniranje, fotogrametriju i LiDAR malih i srednjih objekata te web stranice, konzulting i optimiziranje procesa."
     />
-    <meta name="theme-color" content="#f3f0e7" />
+    <meta name="theme-color" content="#000000" />
     <meta property="og:title" content="3dfx visual studio" />
     <meta
       property="og:description"
@@ -17,26 +17,21 @@
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="hr_HR" />
     <title>3dfx visual studio — 3D, snimanje i web</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
   </head>
   <body>
     <a class="skip" href="#sadrzaj">Preskoči na sadržaj</a>
+    <div id="scena" class="scena" aria-hidden="true">
+      <canvas id="cestice"></canvas>
+      <canvas id="platno"></canvas>
+    </div>
+    <p id="scena-status" class="scena-status" role="status">Učitavanje sata…</p>
     <header class="site-header">
       <div class="wrap header-bar">
         <a class="logo" href="#vrh" aria-label="3dfx visual studio, na vrh stranice">
-          <img src="/favicon.svg" width="28" height="28" alt="" />
-          <span class="logo-text">
-            <span class="logo-name">3dfx</span>
-            <span class="logo-sub">visual studio</span>
-          </span>
+          <img class="logo-slika" src="/brand/logo.png" width="112" height="68" alt="" />
         </a>
-        <button
-          class="nav-toggle"
-          id="otvori-izbornik"
-          type="button"
-          aria-expanded="false"
-          aria-controls="izbornik"
-        >
+        <button class="nav-toggle" id="otvori-izbornik" type="button" aria-expanded="false" aria-controls="izbornik">
           Izbornik
         </button>
         <nav id="izbornik" aria-label="Glavna navigacija" data-open="false">
@@ -50,71 +45,26 @@
     </header>
 
     <main id="sadrzaj" tabindex="-1">
-      <section class="hero" id="vrh" aria-labelledby="naslov">
-        <div class="wrap hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Radna inačica · mala i srednja poduzeća</p>
-            <h1 id="naslov">Predmet, prostor i proces na jednom mjestu.</h1>
-            <p class="lead">
-              Izrađujemo 3D vizualizacije i modele, snimamo male i srednje objekte te slažemo web
-              stranice. Uz to pomažemo razjasniti zadatak i urediti proces rada. Stranica je
-              namijenjena poslovnim subjektima te malim i srednjim poduzećima.
-            </p>
-            <div class="hero-actions">
-              <a class="button" href="#kontakt">Pošaljite upit</a>
-              <a class="link-quiet" href="#usluge">Pregled usluga</a>
-            </div>
+      <section class="blok hero" id="vrh" aria-labelledby="naslov">
+        <div class="wrap blok-kopija">
+          <p class="eyebrow">Radna inačica · mala i srednja poduzeća</p>
+          <h1 id="naslov">Predmet, prostor i proces na jednom mjestu.</h1>
+          <p class="lead">
+            Izrađujemo 3D vizualizacije i modele, snimamo male i srednje objekte te slažemo web
+            stranice. Uz to pomažemo razjasniti zadatak i urediti proces rada. Stranica je
+            namijenjena poslovnim subjektima te malim i srednjim poduzećima.
+          </p>
+          <p class="pokret">Listajte prema dolje: pogled ulazi u sat i istim putem se vraća.</p>
+          <p class="sitno">Sat u pozadini vlastiti je model studija. Nije prikaz klijentskog rada.</p>
+          <div class="hero-actions">
+            <a class="button" href="#kontakt">Pošaljite upit</a>
+            <a class="link-quiet" href="#usluge">Pregled usluga</a>
           </div>
-          <figure class="stage">
-            <div class="stage-frame">
-              <svg viewBox="40 150 470 385" aria-hidden="true" focusable="false">
-                <polygon
-                  points="244.6,262.1 497,407.8 303.7,519.4 51.3,373.7"
-                  fill="rgba(244,240,230,0.03)"
-                  stroke="rgba(244,240,230,0.28)"
-                  stroke-width="1"
-                />
-                <g fill="rgba(244,240,230,0.05)" stroke="rgba(244,240,230,0.78)" stroke-width="1.35" stroke-linejoin="round">
-                  <polygon points="250,169.1 373.5,240.4 295.6,285.4 172.1,214.1" fill="rgba(226,245,106,0.2)" stroke="#e2f56a" />
-                  <polygon points="172.1,335 295.6,406.3 295.6,285.4 172.1,214.1" />
-                  <polygon points="373.5,361.3 295.6,406.3 295.6,285.4 373.5,240.4" fill="rgba(244,240,230,0.09)" />
-                  <polygon points="362.8,296.2 429.9,335 362.8,373.7 295.6,335" fill="rgba(226,245,106,0.14)" stroke="#e2f56a" />
-                  <polygon points="295.6,406.3 362.8,445 362.8,373.7 295.6,335" />
-                  <polygon points="429.9,406.3 362.8,445 362.8,373.7 429.9,335" fill="rgba(244,240,230,0.09)" />
-                  <polygon points="196.3,302.4 266.1,342.7 204.4,378.4 134.6,338.1" fill="rgba(226,245,106,0.12)" stroke="#e2f56a" />
-                  <polygon points="134.6,384.6 204.4,424.9 204.4,378.4 134.6,338.1" />
-                  <polygon points="266.1,389.2 204.4,424.9 204.4,378.4 266.1,342.7" fill="rgba(244,240,230,0.09)" />
-                </g>
-                <g class="sweep" fill="rgba(226,245,106,0.16)" stroke="#e2f56a" stroke-width="1.2">
-                  <polygon points="250,169.1 373.5,240.4 295.6,285.4 172.1,214.1" />
-                </g>
-                <g fill="#e2f56a">
-                  <circle cx="452" cy="250" r="1.7" />
-                  <circle cx="468" cy="268" r="1.4" />
-                  <circle cx="444" cy="282" r="1.5" />
-                  <circle cx="476" cy="292" r="1.3" />
-                  <circle cx="458" cy="308" r="1.6" />
-                  <circle cx="440" cy="246" r="1.2" />
-                  <circle cx="486" cy="246" r="1.2" />
-                  <circle cx="470" cy="326" r="1.3" />
-                </g>
-              </svg>
-            </div>
-            <figcaption>Skica prostorne mreže. Nije primjer izvedenog rada.</figcaption>
-          </figure>
         </div>
       </section>
 
-      <div class="strip">
-        <ul class="wrap strip-list">
-          <li>Vizualizacija i modeliranje</li>
-          <li>Snimanje malih i srednjih objekata</li>
-          <li>Web, konzulting i procesi</li>
-        </ul>
-      </div>
-
-      <section class="section" id="usluge" aria-labelledby="usluge-naslov">
-        <div class="wrap">
+      <section class="blok" id="usluge" aria-labelledby="usluge-naslov">
+        <div class="wrap blok-kopija">
           <header class="section-head">
             <p class="index">01</p>
             <h2 id="usluge-naslov">Usluge</h2>
@@ -123,7 +73,6 @@
               format datoteka i način predaje dogovaramo posebno.
             </p>
           </header>
-
           <div class="groups">
             <section class="group" aria-labelledby="skupina-izrada">
               <div class="group-head">
@@ -149,7 +98,6 @@
                 </article>
               </div>
             </section>
-
             <section class="group" aria-labelledby="skupina-snimanje">
               <div class="group-head">
                 <h3 id="skupina-snimanje">Snimanje</h3>
@@ -177,7 +125,6 @@
                 </article>
               </div>
             </section>
-
             <section class="group" aria-labelledby="skupina-poslovanje">
               <div class="group-head">
                 <h3 id="skupina-poslovanje">Poslovanje</h3>
@@ -214,8 +161,8 @@
         </div>
       </section>
 
-      <section class="section section-dark" id="nacin-rada" aria-labelledby="nacin-naslov">
-        <div class="wrap">
+      <section class="blok" id="nacin-rada" aria-labelledby="nacin-naslov">
+        <div class="wrap blok-kopija">
           <header class="section-head">
             <p class="index">02</p>
             <h2 id="nacin-naslov">Način rada</h2>
@@ -254,8 +201,8 @@
         </div>
       </section>
 
-      <section class="section" id="proces" aria-labelledby="proces-naslov">
-        <div class="wrap">
+      <section class="blok" id="proces" aria-labelledby="proces-naslov">
+        <div class="wrap blok-kopija">
           <header class="section-head">
             <p class="index">03</p>
             <h2 id="proces-naslov">Proces</h2>
@@ -285,8 +232,8 @@
         </div>
       </section>
 
-      <section class="section section-tight" id="radovi" aria-labelledby="radovi-naslov">
-        <div class="wrap">
+      <section class="blok" id="radovi" aria-labelledby="radovi-naslov">
+        <div class="wrap blok-kopija">
           <header class="section-head">
             <p class="index">04</p>
             <h2 id="radovi-naslov">Radovi</h2>
@@ -301,100 +248,101 @@
         </div>
       </section>
 
-      <section class="section" id="kontakt" aria-labelledby="kontakt-naslov">
-        <div class="wrap contact-grid">
-          <div>
-            <header class="section-head">
-              <p class="index">05</p>
-              <h2 id="kontakt-naslov">Kontakt</h2>
-              <p class="section-lead">
-                E-pošta, telefon i adresa još nisu uneseni. Dodat ćemo ih prije javne objave. Do tada
-                obrazac služi za pregled stranice.
-              </p>
-            </header>
-            <dl class="facts">
-              <div>
-                <dt>E-pošta</dt>
-                <dd>Još nije unesena</dd>
-              </div>
-              <div>
-                <dt>Telefon</dt>
-                <dd>Još nije unesen</dd>
-              </div>
-              <div>
-                <dt>Adresa</dt>
-                <dd>Još nije unesena</dd>
-              </div>
-              <div>
-                <dt>Domena</dt>
-                <dd>3dfx.hr</dd>
-              </div>
-            </dl>
-          </div>
-
-          <div>
-          <form id="upit" data-connected="false" novalidate>
-            <p id="upit-napomena" class="form-note">
-              Obrazac nije povezan s poštom ni poslužiteljem. Poruka se ne šalje i ne sprema. Podaci
-              ostaju samo u poljima dok je stranica otvorena.
-            </p>
-            <div class="field-row">
-              <div class="field">
-                <label for="ime">Ime i prezime</label>
-                <input id="ime" name="name" type="text" autocomplete="name" maxlength="120" required />
-                <p id="pogreska-name" class="field-error"></p>
-              </div>
-              <div class="field">
-                <label for="tvrtka">Tvrtka ili obrt <span class="optional">(nije obavezno)</span></label>
-                <input id="tvrtka" name="company" type="text" autocomplete="organization" maxlength="160" />
-                <p class="field-error"></p>
-              </div>
+      <section class="blok" id="kontakt" aria-labelledby="kontakt-naslov">
+        <div class="wrap blok-kopija kontakt-panel">
+          <div class="contact-grid">
+            <div>
+              <header class="section-head">
+                <p class="index">05</p>
+                <h2 id="kontakt-naslov">Kontakt</h2>
+                <p class="section-lead">
+                  E-pošta, telefon i adresa još nisu uneseni. Dodat ćemo ih prije javne objave. Do tada
+                  obrazac služi za pregled stranice.
+                </p>
+              </header>
+              <dl class="facts">
+                <div>
+                  <dt>E-pošta</dt>
+                  <dd>Još nije unesena</dd>
+                </div>
+                <div>
+                  <dt>Telefon</dt>
+                  <dd>Još nije unesen</dd>
+                </div>
+                <div>
+                  <dt>Adresa</dt>
+                  <dd>Još nije unesena</dd>
+                </div>
+                <div>
+                  <dt>Domena</dt>
+                  <dd>3dfx.hr</dd>
+                </div>
+              </dl>
             </div>
-            <div class="field">
-              <label for="eposta">E-pošta</label>
-              <input
-                id="eposta"
-                name="email"
-                type="email"
-                autocomplete="email"
-                maxlength="160"
-                required
-                data-hint="eposta-napomena"
-                aria-describedby="eposta-napomena"
-              />
-              <p id="eposta-napomena" class="hint">Adresa služi samo za isprobavanje obrasca i ne šalje se.</p>
-              <p id="pogreska-email" class="field-error"></p>
+            <div>
+              <form id="upit" data-connected="false" novalidate>
+                <p id="upit-napomena" class="form-note">
+                  Obrazac nije povezan s poštom ni poslužiteljem. Poruka se ne šalje i ne sprema. Podaci
+                  ostaju samo u poljima dok je stranica otvorena.
+                </p>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="ime">Ime i prezime</label>
+                    <input id="ime" name="name" type="text" autocomplete="name" maxlength="120" required />
+                    <p id="pogreska-name" class="field-error"></p>
+                  </div>
+                  <div class="field">
+                    <label for="tvrtka">Tvrtka ili obrt <span class="optional">(nije obavezno)</span></label>
+                    <input id="tvrtka" name="company" type="text" autocomplete="organization" maxlength="160" />
+                    <p class="field-error"></p>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="eposta">E-pošta</label>
+                  <input
+                    id="eposta"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    maxlength="160"
+                    required
+                    data-hint="eposta-napomena"
+                    aria-describedby="eposta-napomena"
+                  />
+                  <p id="eposta-napomena" class="hint">Adresa služi samo za isprobavanje obrasca i ne šalje se.</p>
+                  <p id="pogreska-email" class="field-error"></p>
+                </div>
+                <div class="field">
+                  <label for="interes">Što vas zanima <span class="optional">(nije obavezno)</span></label>
+                  <select id="interes" name="interest">
+                    <option value="">Još nije odabrano</option>
+                    <option>3D vizualizacija</option>
+                    <option>3D modeliranje</option>
+                    <option>3D skeniranje</option>
+                    <option>Fotogrametrija i LiDAR</option>
+                    <option>Konzulting</option>
+                    <option>Izrada web stranica</option>
+                    <option>Optimiziranje procesa</option>
+                    <option>Više usluga odjednom</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="poruka">Poruka</label>
+                  <textarea id="poruka" name="message" maxlength="2000" required></textarea>
+                  <p id="pogreska-message" class="field-error"></p>
+                </div>
+                <p id="upit-status" class="status" tabindex="-1" role="status" aria-live="assertive" aria-atomic="true" hidden></p>
+                <button type="submit" id="posalji" class="button" disabled aria-describedby="upit-napomena">
+                  Pošalji upit
+                </button>
+              </form>
+              <noscript>
+                <p class="form-note">
+                  Bez JavaScripta obrazac ostaje isključen. To je namjerno: poruka se ionako još ne može
+                  poslati, a kontakt podaci nisu objavljeni.
+                </p>
+              </noscript>
             </div>
-            <div class="field">
-              <label for="interes">Što vas zanima <span class="optional">(nije obavezno)</span></label>
-              <select id="interes" name="interest">
-                <option value="">Još nije odabrano</option>
-                <option>3D vizualizacija</option>
-                <option>3D modeliranje</option>
-                <option>3D skeniranje</option>
-                <option>Fotogrametrija i LiDAR</option>
-                <option>Konzulting</option>
-                <option>Izrada web stranica</option>
-                <option>Optimiziranje procesa</option>
-                <option>Više usluga odjednom</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="poruka">Poruka</label>
-              <textarea id="poruka" name="message" maxlength="2000" required></textarea>
-              <p id="pogreska-message" class="field-error"></p>
-            </div>
-            <p id="upit-status" class="status" tabindex="-1" role="status" aria-live="assertive" aria-atomic="true" hidden></p>
-            <button type="submit" id="posalji" class="button button-dark" disabled aria-describedby="upit-napomena">
-              Pošalji upit
-            </button>
-          </form>
-          <noscript>
-            <p class="form-note">
-              Bez JavaScripta obrazac ostaje isključen. To je namjerno: poruka se ionako još ne može
-              poslati, a kontakt podaci nisu objavljeni.
-            </p>
-          </noscript>
           </div>
         </div>
       </section>
@@ -403,8 +351,7 @@
     <footer class="site-footer">
       <div class="wrap footer-grid">
         <div>
-          <p class="logo-name">3dfx</p>
-          <p class="logo-sub">visual studio</p>
+          <img class="logo-slika logo-slika-mala" src="/brand/logo.png" width="96" height="58" alt="3dfx visual studio" />
           <p class="footer-note">Radna inačica stranice<br />3dfx.hr</p>
         </div>
         <nav aria-label="Podnožje">

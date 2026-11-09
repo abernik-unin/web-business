@@ -63,7 +63,15 @@ async function overflow(page) {
 const browser = await puppeteer.launch({
   executablePath: chrome,
   headless: true,
-  args: ["--no-sandbox", "--disable-dev-shm-usage", "--hide-scrollbars"],
+  args: [
+    "--no-sandbox",
+    "--disable-dev-shm-usage",
+    "--hide-scrollbars",
+    "--use-angle=swiftshader",
+    "--enable-unsafe-swiftshader",
+    "--enable-webgl",
+    "--ignore-gpu-blocklist",
+  ],
 });
 
 try {
@@ -187,6 +195,48 @@ try {
   const mobileOverflow = await overflow(page);
   check(mobileOverflow <= 1, `Mobilni preljev nakon izbornika: ${mobileOverflow}px`);
 
+  if (shots) {
+    const stages = [
+      ["pocetak", 0],
+      ["unutra", 0.55],
+      ["jezgra", 0.86],
+      ["kontakt", 1],
+    ];
+    for (const [label, width, height] of [
+      ["desktop", 1440, 900],
+      ["mobilna", 390, 844],
+    ]) {
+      await page.setViewport({ width, height, deviceScaleFactor: 1 });
+      await prepare(page);
+      await page.waitForFunction(
+        () => {
+          const node = document.querySelector("#scena-status");
+          return node?.classList.contains("je-spreman") || node?.classList.contains("je-greska");
+        },
+        { timeout: 25000 },
+      );
+      await delay(500);
+      for (const [name, progress] of stages) {
+        await page.evaluate((value) => {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          window.scrollTo(0, max * value);
+        }, progress);
+        await delay(450);
+        await page.screenshot({ path: `${artifacts}/scena_${name}_${label}.png` });
+      }
+    }
+  }
+
+  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+  await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
+  await page.goto(base, { waitUntil: "networkidle0" });
+  await page.waitForFunction(
+    () => document.querySelector("#scena-status")?.textContent?.includes("isključena"),
+    { timeout: 25000 },
+  );
+  const cursorCount = await page.$$eval(".kursor", (nodes) => nodes.length);
+  check(cursorCount === 0, "Kursor je uključen iako je pokret smanjen");
+
   check(desktopWatch.pageErrors.length === 0, `Greške stranice: ${desktopWatch.pageErrors.join(" | ")}`);
   check(desktopWatch.badResponses.length === 0, `Loši odgovori: ${desktopWatch.badResponses.join(" | ")}`);
 
@@ -196,6 +246,9 @@ try {
   } else {
     console.log("UI provjera je prošla: poveznice, preljev, izbornik i neposlani upit.");
   }
+} catch (error) {
+  console.error(error);
+  process.exitCode = 1;
 } finally {
   await Promise.race([browser.close().catch(() => undefined), delay(2500)]);
   try {
