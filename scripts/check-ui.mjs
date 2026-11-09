@@ -117,8 +117,14 @@ try {
   }
 
   await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
-  await page.evaluate(() => window.scrollTo(0, 0));
-  if (shots) await page.screenshot({ path: `${artifacts}/staklo_hero_desktop.png` });
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = "auto";
+    document.body.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  });
+  if (shots) await page.screenshot({ path: `${artifacts}/puls_hero_desktop.png` });
 
   const requests = [];
   const onRequest = (request) => requests.push(request.url());
@@ -165,7 +171,7 @@ try {
   await prepare(page);
   const closed = await page.$eval("#izbornik", (node) => getComputedStyle(node).display === "none");
   check(closed, "Mobilni izbornik je vidljiv prije otvaranja");
-  if (shots) await page.screenshot({ path: `${artifacts}/staklo_hero_mobilna.png` });
+  if (shots) await page.screenshot({ path: `${artifacts}/puls_izbornik_mobilna.png` });
   await page.click("#otvori-izbornik");
   const opened = await page.$eval("#otvori-izbornik", (node) => node.getAttribute("aria-expanded") === "true");
   check(opened, "Izbornik se nije otvorio");
@@ -207,10 +213,52 @@ try {
     }
   }
 
+  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+  await prepare(page);
+  const pulse = await page.$eval(".sjaj", (node) => {
+    const style = getComputedStyle(node);
+    return { duration: style.animationDuration, timing: style.animationTimingFunction };
+  });
+  check(pulse.duration === "10s" && pulse.timing === "linear", `Puls nije jednoličan: ${JSON.stringify(pulse)}`);
+  const orbCenter = await page.$eval(".orb-a", (node) => {
+    const rect = node.getBoundingClientRect();
+    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+  });
+  await page.mouse.move(orbCenter.x - 36, orbCenter.y);
+  await delay(450);
+  const pushed = await page.$eval(".orb-a", (node) => node.style.transform);
+  check(/translate3d\((?:[1-9]|[1-9]\d)/.test(pushed), `Orb se nije odmaknuo: ${pushed}`);
+  await page.mouse.move(6, 6, { steps: 12 });
+  await delay(800);
+  const returned = await page.$eval(".orb-a", (node) => node.style.transform);
+  const offsets = [...returned.matchAll(/-?\d+(?:\.\d+)?px/g)].map((match) => Math.abs(parseFloat(match[0])));
+  check(offsets.length > 0 && offsets.every((value) => value < 2.5), `Orb se nije vratio: ${returned}`);
+
   await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
+  await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
   await page.goto(base, { waitUntil: "networkidle0" });
-  const still = await page.$eval(".orb", (node) => getComputedStyle(node).animationName);
+  const still = await page.$eval(".sjaj", (node) => getComputedStyle(node).animationName);
   check(still === "none", `Oblik se i dalje miče: ${still}`);
+  const menuLabel = await page.$eval("#otvori-izbornik", (node) => {
+    const button = node;
+    const style = getComputedStyle(button);
+    const box = button.getBoundingClientRect();
+    const range = document.createRange();
+    range.selectNodeContents(button);
+    const text = range.getBoundingClientRect();
+    return {
+      display: style.display,
+      align: style.alignItems,
+      justify: style.justifyContent,
+      dx: Math.abs(text.left + text.width / 2 - (box.left + box.width / 2)),
+      dy: Math.abs(text.top + text.height / 2 - (box.top + box.height / 2)),
+    };
+  });
+  check(
+    (menuLabel.display === "inline-flex" || menuLabel.display === "flex") && menuLabel.align === "center" && menuLabel.justify === "center",
+    `Gumb izbornika nije centriran: ${JSON.stringify(menuLabel)}`,
+  );
+  check(menuLabel.dx < 2 && menuLabel.dy < 2, `Tekst izbornika nije u sredini: ${JSON.stringify(menuLabel)}`);
 
   check(desktopWatch.pageErrors.length === 0, `Greške stranice: ${desktopWatch.pageErrors.join(" | ")}`);
   check(desktopWatch.badResponses.length === 0, `Loši odgovori: ${desktopWatch.badResponses.join(" | ")}`);

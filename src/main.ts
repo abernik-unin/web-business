@@ -145,3 +145,64 @@ if (form instanceof HTMLFormElement && status instanceof HTMLElement && submitBu
   form.addEventListener("submit", onSubmit);
   submitButton.disabled = false;
 }
+
+const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const desktopMouse = finePointer || navigator.maxTouchPoints === 0;
+
+if (desktopMouse && !reducedMotion) {
+  const orbs = [...document.querySelectorAll<HTMLElement>(".orb")];
+  const drift = orbs.map(() => ({ x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0 }));
+  const maxPush = 28;
+  let frame = 0;
+
+  const tick = (): void => {
+    let moving = false;
+    orbs.forEach((orb, index) => {
+      const item = drift[index];
+      if (!item) return;
+      item.vx = (item.vx + (item.tx - item.x) * 0.08) * 0.72;
+      item.vy = (item.vy + (item.ty - item.y) * 0.08) * 0.72;
+      item.x = Math.max(-maxPush, Math.min(maxPush, item.x + item.vx));
+      item.y = Math.max(-maxPush, Math.min(maxPush, item.y + item.vy));
+      if (Math.hypot(item.vx, item.vy) > 0.05 || Math.hypot(item.tx, item.ty) > 0.05) moving = true;
+      orb.style.transform = `translate3d(${item.x.toFixed(2)}px, ${item.y.toFixed(2)}px, 0)`;
+    });
+    frame = moving ? window.requestAnimationFrame(tick) : 0;
+  };
+
+  const place = (clientX: number, clientY: number): void => {
+    orbs.forEach((orb, index) => {
+      const item = drift[index];
+      if (!item) return;
+      const rect = orb.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2 - item.x;
+      const cy = rect.top + rect.height / 2 - item.y;
+      const dx = cx - clientX;
+      const dy = cy - clientY;
+      const distance = Math.hypot(dx, dy) || 1;
+      const reach = Math.max(96, rect.width * 0.55);
+      const influence = Math.max(0, 1 - distance / reach);
+      item.tx = (dx / distance) * influence * maxPush;
+      item.ty = (dy / distance) * influence * maxPush;
+    });
+    if (!frame) frame = window.requestAnimationFrame(tick);
+  };
+
+  window.addEventListener(
+    "pointermove",
+    (event) => {
+      if (event.pointerType !== "mouse") return;
+      place(event.clientX, event.clientY);
+    },
+    { passive: true },
+  );
+
+  document.documentElement.addEventListener("pointerleave", () => {
+    for (const item of drift) {
+      item.tx = 0;
+      item.ty = 0;
+    }
+    if (!frame) frame = window.requestAnimationFrame(tick);
+  });
+}
