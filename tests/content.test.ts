@@ -29,9 +29,10 @@ describe("javni sadržaj", () => {
     expect(html).toContain("Još nije unesen");
     expect(html).toContain("47376800432");
     expect(html).toContain("HR0423900013223608559");
-    expect(html).toContain('data-kod="iskljucen"');
+    expect(html).toContain('data-kod="ukljucen"');
     expect(html).toContain('id="prikazi-kod"');
-    expect(html).not.toContain("placanje-kod.png\"");
+    expect(html).toContain("Skenirajte u aplikaciji svoje banke");
+    expect(main).toContain("placanje-kod.png");
     expect(html).toContain("nije povezan");
     expect(html).toContain("<noscript>");
     expect(html).toMatch(/<button[^>]*id="posalji"[^>]*disabled/);

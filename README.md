@@ -30,7 +30,7 @@ Datoteka `.github/workflows/pages.yml` slaže `dist` za GitHub Pages na adresi `
 - Telefon još nije unesen.
 - Obrazac nije povezan. Provjera javlja da poruka nije poslana i ne šalje podatke.
 - Nema portfelja, izjava ni tuđih imena klijenata.
-- Kod za plaćanje ostaje skriven dok se ne doda `public/placanje-kod.png` i na gumbu postavi `data-kod="ukljucen"`.
+- Kod za plaćanje otvara se gumbom pokraj IBAN-a. Slika je `public/placanje-kod.png`.
 - U zaglavlju stoji `noindex`, da se radna inačica ne nudi za indeksiranje. To treba ukloniti tek uz stvarnu objavu.
 
 Domena 3dfx.hr navedena je kao tekst, bez poveznice. DNS se ne dira.

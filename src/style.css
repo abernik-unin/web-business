@@ -376,8 +376,15 @@ select {
   background: rgba(0, 0, 0, 0.55);
 }
 .kod-prozor[hidden] { display: none; }
-.kod-kartica { width: min(22rem, 100%); padding: 1.1rem; text-align: center; }
-.kod-kartica img { width: min(16rem, 100%); height: auto; margin: 0.6rem auto 0; display: block; }
+.kod-kartica { width: min(40rem, 100%); padding: 1.1rem 1.15rem 1.25rem; text-align: center; }
+.kod-platno { margin-top: 0.85rem; padding: 1.15rem; background: #fff; border-radius: 0.35rem; }
+.kod-platno img {
+  width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
 .kod-zatvori { margin-left: auto; display: flex; }
 
 @media (max-width: 980px) {
