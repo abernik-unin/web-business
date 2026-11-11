@@ -88,7 +88,12 @@ try {
   check(enabled, "Gumb za upit ostao je isključen");
 
   const broken = await page.evaluate(() =>
-    [...document.images].filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.src),
+    [...document.images]
+      .filter((image) => {
+      if (image.id === "kod-slika") return false;
+      return image.getAttribute("src") && (!image.complete || image.naturalWidth === 0);
+    })
+      .map((image) => image.src),
   );
   check(broken.length === 0, `Slike se ne učitavaju: ${broken.join(", ")}`);
 
@@ -124,7 +129,24 @@ try {
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
   });
-  if (shots) await page.screenshot({ path: `${artifacts}/puls_hero_desktop.png` });
+  const heroLayout = await page.evaluate(() => {
+    const header = document.querySelector(".site-header")?.getBoundingClientRect();
+    const card = document.querySelector(".hero .staklo")?.getBoundingClientRect();
+    const projekti = document.querySelector("#projekti")?.getBoundingClientRect();
+    const footer = document.querySelector(".site-footer")?.getBoundingClientRect();
+    const box = document.querySelector(".podnozje")?.getBoundingClientRect();
+    return {
+      belowHeader: header && card ? Math.round(card.top - header.bottom) : -1,
+      beforeProjekti: card && projekti ? Math.round(projekti.top - card.bottom) : -1,
+      cardWidth: card ? Math.round(card.width) : -1,
+      footerGap: footer && box ? Math.round(box.top - footer.top) : -1,
+    };
+  });
+  check(Math.abs(heroLayout.belowHeader - 38) <= 2, `Hero nije 38 px ispod zaglavlja: ${heroLayout.belowHeader}`);
+  check(Math.abs(heroLayout.beforeProjekti - 113) <= 2, `Projekti nisu 113 px ispod kartice: ${heroLayout.beforeProjekti}`);
+  check(Math.abs(heroLayout.cardWidth - (40 * 16 + 151)) <= 2, `Širina kartice: ${heroLayout.cardWidth}`);
+  check(Math.abs(heroLayout.footerGap - 39) <= 2, `Podnožje nije odmaknuto od crte: ${heroLayout.footerGap}`);
+  if (shots) await page.screenshot({ path: `${artifacts}/hero_razmak_desktop.png` });
 
   const requests = [];
   const onRequest = (request) => requests.push(request.url());
@@ -233,6 +255,39 @@ try {
   const returned = await page.$eval(".orb-a", (node) => node.style.transform);
   const offsets = [...returned.matchAll(/-?\d+(?:\.\d+)?px/g)].map((match) => Math.abs(parseFloat(match[0])));
   check(offsets.length > 0 && offsets.every((value) => value < 2.5), `Orb se nije vratio: ${returned}`);
+
+  await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = "auto";
+    document.querySelector(".site-footer")?.scrollIntoView({ block: "end" });
+  });
+  await page.waitForFunction(() => document.querySelector("#prikazi-kod")?.hidden === false, { timeout: 5000 });
+  if (shots) await page.screenshot({ path: `${artifacts}/podnozje_zatvoreno.png` });
+  await page.click("#pravni-podaci");
+  await delay(350);
+  const legalOpen = await page.$eval("#pravni-podaci", (node) => node.getAttribute("aria-expanded"));
+  check(legalOpen === "true", "Pravni podaci se nisu otvorili");
+  if (shots) await page.screenshot({ path: `${artifacts}/podnozje_otvoreno.png` });
+  await page.click("#prikazi-kod");
+  await page.waitForSelector("#kod-prozor:not([hidden])");
+  const caption = await page.$eval("#kod-naslov", (node) => node.textContent?.trim());
+  check(caption === "Skenirajte u aplikaciji svoje banke", `Natpis koda: ${caption}`);
+  const crisp = await page.$eval("#kod-slika", (node) => ({
+    rendering: getComputedStyle(node).imageRendering,
+    width: node.naturalWidth,
+    complete: node.complete,
+  }));
+  check(crisp.complete && crisp.width === 421 && (crisp.rendering === "pixelated" || crisp.rendering === "crisp-edges"), `Barkod nije oštar: ${JSON.stringify(crisp)}`);
+  if (shots) await page.screenshot({ path: `${artifacts}/kod_placanje_otvoren.png` });
+  await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });
+  await page.evaluate(() => {
+    const footer = document.querySelector(".site-footer");
+    const header = document.querySelector(".site-header");
+    footer?.scrollIntoView({ block: "start" });
+    window.scrollBy(0, -((header?.getBoundingClientRect().height ?? 0) + 12));
+  });
+  await delay(200);
+  if (shots) await page.screenshot({ path: `${artifacts}/podnozje_otvoreno_mobilna.png` });
 
   await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 1 });

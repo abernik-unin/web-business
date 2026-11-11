@@ -1,6 +1,6 @@
 # web-business
 
-Radna web-stranica studija **3dfx visual studio**. Javni tekst je na hrvatskom. Ovo je prva inačica za pregled: nije objavljena i nije povezana s domenom.
+Radna web-stranica studija **3dfx visual studio**. Javni tekst je na hrvatskom. Inačica na GitHub Pages i dalje ima `noindex`.
 
 Stranica je jednostranična, za poslovne subjekte te mala i srednja poduzeća:
 
@@ -27,10 +27,10 @@ Datoteka `.github/workflows/pages.yml` slaže `dist` za GitHub Pages na adresi `
 
 ## Namjerno nedovršeno
 
-- Nema prave adrese e-pošte, telefona ni sjedišta. Na stranici piše da još nisu uneseni.
+- Telefon još nije unesen.
 - Obrazac nije povezan. Provjera javlja da poruka nije poslana i ne šalje podatke.
-- Nema portfelja, izjava, imena klijenata, brojki ni potvrda.
-- Pravne stranice dolaze prije javne objave.
+- Nema portfelja, izjava ni tuđih imena klijenata.
+- Kod za plaćanje otvara se gumbom pokraj IBAN-a. Slika je `public/placanje-kod.png`.
 - U zaglavlju stoji `noindex`, da se radna inačica ne nudi za indeksiranje. To treba ukloniti tek uz stvarnu objavu.
 
 Domena 3dfx.hr navedena je kao tekst, bez poveznice. DNS se ne dira.

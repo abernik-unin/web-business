@@ -206,3 +206,56 @@ if (desktopMouse && !reducedMotion) {
     if (!frame) frame = window.requestAnimationFrame(tick);
   });
 }
+
+const legalButton = document.querySelector("#pravni-podaci");
+const legalPanel = document.querySelector("#pravni-panel");
+if (legalButton instanceof HTMLButtonElement && legalPanel instanceof HTMLElement) {
+  const setLegal = (open: boolean): void => {
+    legalButton.setAttribute("aria-expanded", open ? "true" : "false");
+    legalPanel.classList.toggle("je-otvoren", open);
+    legalPanel.setAttribute("aria-hidden", open ? "false" : "true");
+    legalPanel.toggleAttribute("inert", !open);
+  };
+  setLegal(false);
+  legalButton.addEventListener("click", () => {
+    setLegal(legalButton.getAttribute("aria-expanded") !== "true");
+  });
+}
+
+const codeButton = document.querySelector("#prikazi-kod");
+const codeDialog = document.querySelector("#kod-prozor");
+const codeImage = document.querySelector("#kod-slika");
+const codeClose = document.querySelector("#kod-zatvori");
+const closeCode = (): void => {
+  if (!(codeDialog instanceof HTMLElement) || !(codeButton instanceof HTMLButtonElement)) return;
+  codeDialog.hidden = true;
+  codeButton.focus();
+};
+
+if (
+  codeButton instanceof HTMLButtonElement &&
+  codeButton.dataset.kod === "ukljucen" &&
+  codeDialog instanceof HTMLElement &&
+  codeImage instanceof HTMLImageElement &&
+  codeClose instanceof HTMLButtonElement
+) {
+  const probe = new Image();
+  probe.onload = () => {
+    if (probe.naturalWidth < 1) return;
+    codeImage.src = probe.src;
+    codeButton.hidden = false;
+  };
+  probe.src = `${import.meta.env.BASE_URL}placanje-kod.png`;
+
+  codeButton.addEventListener("click", () => {
+    codeDialog.hidden = false;
+    codeClose.focus();
+  });
+  codeClose.addEventListener("click", closeCode);
+  codeDialog.addEventListener("click", (event) => {
+    if (event.target === codeDialog) closeCode();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !codeDialog.hidden) closeCode();
+  });
+}

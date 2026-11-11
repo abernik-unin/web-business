@@ -172,12 +172,10 @@ p { hyphens: auto; }
 }
 
 .hero {
-  min-height: calc(100svh - var(--header));
-  display: flex;
-  align-items: center;
-  padding-block: 3rem;
+  display: block;
+  padding: 38px 0 0;
 }
-.hero-grid { display: grid; }
+.hero-grid { display: block; }
 .staklo {
   background: rgba(8, 14, 18, 0.42);
   backdrop-filter: blur(26px) saturate(1.45);
@@ -187,7 +185,11 @@ p { hyphens: auto; }
     inset 0 1px 0 rgba(255, 255, 255, 0.28),
     0 24px 60px rgba(0, 0, 0, 0.28);
 }
-.hero .staklo { max-width: 40rem; padding: 2rem 2rem 1.8rem; }
+.hero .staklo {
+  width: min(100%, calc(40rem + 151px));
+  margin-inline: auto;
+  padding: 2rem 2rem 1.8rem;
+}
 
 .eyebrow, .index {
   margin: 0;
@@ -227,6 +229,7 @@ h3 { margin: 0.35rem 0 0.55rem; font-size: 1.55rem; }
 .link-quiet { color: var(--ink); text-underline-offset: 0.22em; }
 
 .blok { padding-block: clamp(4rem, 9vh, 7rem); }
+#projekti { margin-top: 113px; padding-top: 0; }
 .section-head { display: grid; gap: 0.55rem; max-width: 40rem; margin-bottom: 1.6rem; }
 .praznine, .kartice { display: grid; gap: 1rem; list-style: none; margin: 0; padding: 0; }
 .praznine { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -284,14 +287,108 @@ select {
 .field-error { color: var(--danger); min-height: 1.2em; }
 .field-error:empty { min-height: 0; }
 
-.site-footer { padding-bottom: 2.5rem; }
-.footer-grid { display: grid; grid-template-columns: 1.1fr 0.8fr 1.2fr; gap: 1.4rem; padding: 1.5rem; }
-.footer-note { margin: 0.75rem 0 0; color: var(--soft); }
-.site-footer nav { display: grid; align-content: start; gap: 0.35rem; }
-.site-footer nav a { width: fit-content; color: var(--ink); text-underline-offset: 0.2em; }
+.site-footer {
+  border-top: 1px solid rgba(62, 240, 216, 0.55);
+  padding: 38px 0 2.5rem;
+}
+.podnozje { padding: 1.3rem 1.35rem 1.15rem; }
+.podnozje-vrh, .podnozje-dno {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+.podnozje-linkovi {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem 1.15rem;
+  margin-left: auto;
+}
+.podnozje-linkovi a { color: var(--ink); text-underline-offset: 0.2em; }
+.podnozje-dno {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-top: 1.15rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.prava { margin: 0; color: var(--soft); font-size: 0.95rem; }
+.pravni-gumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0 0.2rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.strelica { transition: transform 280ms ease; }
+.pravni-gumb[aria-expanded="true"] .strelica { transform: rotate(180deg); }
+.pravni-panel {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: 1fr;
+}
+.ima-js .pravni-panel {
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 280ms ease;
+}
+.ima-js .pravni-panel.je-otvoren { grid-template-rows: 1fr; }
+.pravni-unutra { overflow: hidden; }
+.pravni-stupci {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem 1.4rem;
+  margin: 0;
+  padding: 0.35rem 0 0.2rem;
+}
+.pravni-stupci div { min-width: 0; }
+.pravni-stupci dt { font-weight: 700; margin-bottom: 0.25rem; }
+.pravni-stupci dd { margin: 0; color: var(--muted); }
+.iban-red { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+.kod-gumb[hidden] { display: none; }
+.kod-gumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--turquoise);
+  cursor: pointer;
+}
+.kod-prozor {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.55);
+}
+.kod-prozor[hidden] { display: none; }
+.kod-kartica { width: min(40rem, 100%); padding: 1.1rem 1.15rem 1.25rem; text-align: center; }
+.kod-platno { margin-top: 0.85rem; padding: 1.15rem; background: #fff; border-radius: 0.35rem; }
+.kod-platno img {
+  width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+.kod-zatvori { margin-left: auto; display: flex; }
 
 @media (max-width: 980px) {
-  .praznine, .kartice, .footer-grid { grid-template-columns: 1fr 1fr; }
+  .praznine, .kartice, .pravni-stupci { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 860px) {
   .nav-toggle { display: inline-flex; }
@@ -313,14 +410,18 @@ select {
   .kontakt-grid, .facts div { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .praznine, .kartice, .field-row, .footer-grid { grid-template-columns: 1fr; }
+  .praznine, .kartice, .field-row, .pravni-stupci { grid-template-columns: 1fr; }
   .button { width: 100%; }
   .hero-actions .link-quiet { width: auto; }
   .hero .staklo { padding: 1.35rem; }
+  .podnozje-vrh { align-items: flex-start; flex-direction: column; }
+  .podnozje-dno { grid-template-columns: 1fr; }
+  .podnozje-linkovi { margin-left: 0; justify-content: flex-start; }
 }
 #vrh, #projekti, #dizajn, #kontakt, #sadrzaj { scroll-margin-top: 6rem; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .sjaj { animation: none; }
+  .pravni-panel, .strelica { transition: none; }
 }
