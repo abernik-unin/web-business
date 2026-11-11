@@ -25,8 +25,13 @@ describe("javni sadržaj", () => {
     expect(html).toContain('name="robots" content="noindex"');
     expect(html).toContain('data-connected="false"');
     expect(html).toContain("Radna inačica");
-    expect(html).toContain("Još nije unesena");
+    expect(html).toContain("mailto:kontakt@3dfx.hr");
     expect(html).toContain("Još nije unesen");
+    expect(html).toContain("47376800432");
+    expect(html).toContain("HR0423900013223608559");
+    expect(html).toContain('data-kod="iskljucen"');
+    expect(html).toContain('id="prikazi-kod"');
+    expect(html).not.toContain("placanje-kod.png\"");
     expect(html).toContain("nije povezan");
     expect(html).toContain("<noscript>");
     expect(html).toMatch(/<button[^>]*id="posalji"[^>]*disabled/);
@@ -38,9 +43,10 @@ describe("javni sadržaj", () => {
     const hrefs = [...html.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
     expect(hrefs.length).toBeGreaterThan(0);
     for (const href of hrefs) {
-      expect(href.startsWith("#") || href.startsWith("/")).toBe(true);
+      if (href === "mailto:kontakt@3dfx.hr") continue;
+      expect(href?.startsWith("#") || href?.startsWith("/")).toBe(true);
       expect(href).not.toBe("#");
-      if (!href.startsWith("#")) continue;
+      if (!href?.startsWith("#")) continue;
       const id = href.slice(1);
       expect(html).toContain(`id="${id}"`);
     }
@@ -48,10 +54,9 @@ describe("javni sadržaj", () => {
 
   it("ne izmišlja kontakt, reference, brojke ni vanjske poveznice", () => {
     const banned = [
-      /mailto:/i,
+      /mailto:(?!kontakt@3dfx\.hr)/i,
       /tel:/i,
       /href="https?:/i,
-      /@/,
       /lorem/i,
       /ipsum/i,
       /najbolj/i,
@@ -64,16 +69,19 @@ describe("javni sadržaj", () => {
       /godine iskustva/i,
       /zadovoljn/i,
       /\+385/,
-      /\bOIB\b/,
       /d\.o\.o/i,
       /j\.d\.o\.o/i,
       /uspješno poslan/i,
     ];
     for (const pattern of banned) {
-      const target = pattern.source === "@" ? visibleHtml : publicText;
-      expect(target).not.toMatch(pattern);
+      expect(publicText).not.toMatch(pattern);
     }
-    expect(visibleHtml).not.toMatch(/\+?\d[\d\s()/.-]{8,}/);
+    const withoutGiven = visibleHtml
+      .replaceAll("kontakt@3dfx.hr", "")
+      .replaceAll("47376800432", "")
+      .replaceAll("HR0423900013223608559", "");
+    expect(withoutGiven).not.toMatch(/@/);
+    expect(withoutGiven).not.toMatch(/\+?\d[\d\s()/.-]{8,}/);
   });
 });
 
